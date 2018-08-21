@@ -19,10 +19,12 @@ import { AppareilsListComponent }   from './appareils/appareils-list/appareils-l
 import { SingleAppareilComponent }  from './appareils/single-appareil/single-appareil.component';
 import { ForOhforComponent }        from './for-ohfor/for-ohfor.component';
 import { ProfileComponent }         from './profile/profile.component';
-import { FooterComponent } from './footer/footer.component';
+import { FooterComponent }          from './footer/footer.component';
+import { AppareilsFormComponent }   from './appareils/appareils-form/appareils-form.component';
 
 const appRoutes: Routes = [
     { path: 'authentification'  ,                           component: AuthComponent },
+    { path: 'add-new-machine'   , canActivate: [AuthGuard], component: AppareilsFormComponent },
     { path: 'machines-list'     , canActivate: [AuthGuard], component: AppareilsViewComponent },
     { path: 'machines-list/:id' , canActivate: [AuthGuard], component: SingleAppareilComponent },
     { path: 'profile'           , canActivate: [AuthGuard], component: ProfileComponent },
@@ -44,7 +46,8 @@ const appRoutes: Routes = [
     AuthComponent,
     ForOhforComponent,
     ProfileComponent,
-    FooterComponent
+    FooterComponent,
+    AppareilsFormComponent
   ],
   imports: [
     BrowserModule,
