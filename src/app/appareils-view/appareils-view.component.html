@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2>Mes appareils</h2>
+        <app-appareils *ngFor          = "let machine of appareils; let i = index"
+                       [appareils]     = "machine"
+                       [appareilIndex] = "i">
+        </app-appareils>
+    </div>
+</div><br/><br/>
+<div class="row">
+    <div class="offset-sm-2 col-sm-4 text-center">
+        <button type="button" class = "btn btn-danger btn-block" (click) = "onSwitchAllOFF()">
+            Tout Eteindre
+        </button>
+    </div>
+    <div class="col-sm-4 text-center">
+        <button type="button" class = "btn btn-success btn-block" (click) = "onSwitchAllON()">
+            Tout Allumer
+        </button>
+    </div>
+</div>
+<div style = "margin-bottom: 1%;"></div>

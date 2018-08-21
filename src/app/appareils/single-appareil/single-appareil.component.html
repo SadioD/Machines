@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2>{{ machine.name }}'s Description</h2>
+        <ul class = "list-group">
+            <li class = "list-group-item">
+                {{ machine.content }}
+            </li>
+            <li class = "list-group-item">
+                Purchase Date - {{ machine.purchaseDate | async | date }}
+            </li>
+            <li [ngClass] = "getStatusClass()">
+                Machine's status - {{ machine.status }}
+            </li>
+        </ul>
+    </div>
+</div><br/>
+<div class="row">
+    <div class="offset-md-5 col-md-2 text-center">
+        <button type="button" class="btn btn-dark btn-block" routerLink = "/machines-list">Retour</button>
+    </div>
+</div>
+<div style = "margin-bottom: 10%;"></div>

@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-7">
+        <h4>{{ appareil.name}}</h4>
+    </div>
+    <div class="col-md-5 text-right">
+        <h5>{{ appareil.purchaseDate | async | date }}</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <p>{{ appareil.content }}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-right">
+        <button type="button" class = "btn btn-dark" [routerLink] = "[appareil.id]">Afficher</button>
+        <button style = "margin-left: 2%;" type="button" class = "btn btn-danger"  (click) = "onSwitchOFF()"
+                                                                                   *ngIf   = "appareil.status === 'allumé'">Eteindre</button>
+        <button style = "margin-left: 2%;" type="button" class = "btn btn-success" (click) = "onSwitchON()"
+                                                                                   *ngIf   = "appareil.status === 'éteint'">Allumer</button>
+
+    </div>
+</div>
