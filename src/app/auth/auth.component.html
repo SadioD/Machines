@@ -1,17 +1,32 @@
-<div class="row" style = "margin-top: 5%; margin-bottom: 2%;">
-    <div class="offset-2 col-md-8">
+<div class="row" style = "margin-top: 2%; margin-bottom: 2.5%;">
+    <div class="offset-md-2 col-md-8">
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <h2>Changing your status</h2>
-                        <p>To change your status, please click the below button</p>
+                        <p *ngIf = "!isAuth()">To access the app's full content, please sign in!</p>
+                        <p *ngIf = "isAuth()" >To log out from the app, please click on the button!</p>
                     </div>
                 </div>
-                <div class="row" style = "margin-top: 24%;">
-                    <div class="offset-3 col-md-6">
-                        <button type="button" class="btn btn-success btn-block" *ngIf = "!isAuth()" (click) = "onlogUserIn()" >Sign In!</button>
-                        <button type="button" class="btn btn-danger btn-block" *ngIf = "isAuth()"  (click) = "onlogUserOut()" >Sign Out!</button>
+                <div class="row" *ngIf = "!isAuth()" style = "margin-top: 5%;">
+                    <div class="offset-1 col-11">
+                        <form #authForm = "ngForm" (ngSubmit) = "onlogUserIn(authForm)">
+                            <div class="form-group">
+                                <label for="pseudo">Choose your Pseudo*</label>
+                                <input type="text" id = "pseudo" name="pseudo" class = "form-control" ngModel />
+                            </div>
+                            <div class="row" style = "margin-top: 13%;">
+                                <div class="offset-md-3 col-md-6">
+                                    <button id = "authButton" type="submit" class="btn btn-success btn-block">Sign In!</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row" style = "margin-top: 29%;" *ngIf = "isAuth()">
+                    <div class="offset-md-3 col-md-6">
+                        <button type="button" class="btn btn-danger btn-block"  *ngIf = "isAuth()"  (click) = "onlogUserOut()" >Sign Out!</button>
                     </div>
                 </div>
             </div>

@@ -70,10 +70,22 @@ export class AppareilService {
         const machineIndex = this.appareils.findIndex((s) => {
             return s.id === machine.id;
         });
-        // On met à jour la machine et on emet la copie
+        // On met à jour la machine et on emet la copie de la liste d'Array
         this.appareils[machineIndex].name    = machine.name;
         this.appareils[machineIndex].content = machine.content;
         this.appareils[machineIndex].status  = machine.status;
+        this.emitAppareilsSubject();
+    }//------------------------------------------------------------------------------------------------------------------------------------
+    // Permet de supprimer une machine -----------------------------------------------------------------------------------------------------------
+    // => On attribue le bon ID à la nouvelle machine + une date de création et on l'ajoute à l'array des machines
+    deleteThisMachine(machine: AppareilManager) {
+        // On recupère l'index
+        const machineIndex = this.appareils.findIndex((s) => {
+            return s.id === machine.id;
+        });
+        // On supprime la machine et on emet la copie de la liste d'Array
+        // La methode splice prend l'index à partir duquel la suppression sera faite + le nbre d'éléments à supprimer
+        this.appareils.splice(machineIndex, 1);
         this.emitAppareilsSubject();
     }//------------------------------------------------------------------------------------------------------------------------------------
 }

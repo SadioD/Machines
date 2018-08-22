@@ -1,24 +1,21 @@
 <div class="row">
   <div class="col-md-12">
-      <h2>Welcome to your profile {{ user.name }}</h2>
+      <h2>Welcome to your profile {{ user.pseudo }}</h2>
       <p>
           You'll find below your personal Infos. Soon, you'll be able to update your profile...
       </p>
   </div>
 </div><br/>
 <div class="row">
-    <div class="offset-1 col-md-7">
+    <div class="offset-md-1 col-md-7">
         <ul class="list-group">
-          <li class="list-group-item">Your ID: {{ user.id }}</li>
-          <li class="list-group-item">Your Name: {{ user.name }}</li>
-          <li class="list-group-item">Your Email: {{ user.email }}</li>
+          <li class="list-group-item">Your Pseudo: {{ user.pseudo }}</li>
           <li class="list-group-item list-group-item-success">Your Status: {{ user.status }}</li>
         </ul>
     </div>
 </div><br/>
-<div class="row">
-    <div class="offset-4 col-md-3">
+<div class="row" style = "margin-bottom: 11%;">
+    <div class="col-12 offset-md-3 col-md-3 text-center">
         <button type="button" class="btn btn-dark" disabled>Update your Profile !</button>
     </div>
 </div>
-<div style = "margin-bottom: 1%;"></div>

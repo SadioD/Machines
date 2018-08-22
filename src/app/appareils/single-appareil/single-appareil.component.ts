@@ -1,5 +1,6 @@
 import { Component, OnInit }         from '@angular/core';
 import { ActivatedRoute, Router }    from '@angular/router';
+import { NgFlashMessageService }     from 'ng-flash-messages';
 import { AppareilManager }           from '../../models/appareil.manager';
 import { AppareilService }           from '../../services/appareil.service';
 
@@ -13,9 +14,10 @@ export class SingleAppareilComponent implements OnInit {
     // ATTRIBUTS + CONSTR + ONINIT + ONDESTROY -----------------------------------------------------------------------------------------------------------------
     machine: AppareilManager | any;
 
-    constructor(private appareilService: AppareilService,
+    constructor(private router:          Router,
                 private route:           ActivatedRoute,
-                private router:          Router) { }
+                private appareilService: AppareilService,
+                private flashMessage:    NgFlashMessageService) { }
 
     ngOnInit() {
         this.machine = this.appareilService.getMachineByID(+this.route.snapshot.params['id']);
@@ -36,7 +38,14 @@ export class SingleAppareilComponent implements OnInit {
     }
     // Permet de supprimer une machine
     onDeleteMachine() {
-
+        this.appareilService.deleteThisMachine(this.machine);
+        this.flashMessage.showFlashMessage({
+            messages:  ["The machine has been successfully deleted. You'll be redirected soon..."],
+            dismissible: false,
+            timeout: false,
+            type: 'success'
+        });
+        setTimeout(() => { this.router.navigate(['machines-list']); }, 4000);
     }//-----------------------------------------------------------------------------------------------------------------------------------------
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TITLE AND SCRIPTS ----------------------------------------------------------------------------------------------------------------------

@@ -1,23 +1,27 @@
-<ng-flash-message></ng-flash-message>
 <div class="row">
-    <div class="offset-2 col-md-8">
+    <div class="col-md-12 text-center">
+        <p>To submit the form, please fill out all reuired fields</p>
+    </div>
+</div><br/>
+<div class="row">
+    <div class="offset-md-2 col-md-8">
         <div class="card">
             <div class="card-body">
                 <form id = "myForm" #f = "ngForm" (ngSubmit) = "onSubmit(f)">
                     <div class="form-group">
-                        <label for="name">Machine's Name</label>
-                        <input type="text" name="name" id = "name" class = "form-control" *ngIf = "!machineExists()" ngModel />
-                        <input type="text" name="name" id = "name" class = "form-control" *ngIf = "machineExists()"  [ngModel] = "machine.name" />
+                        <label for="name">Machine's Name*</label>
+                        <input type="text" name="name" id = "name" class = "form-control" *ngIf = "!machineExists()" ngModel required/>
+                        <input type="text" name="name" id = "name" class = "form-control" *ngIf = "machineExists()"  [ngModel] = "machine.name" required/>
                     </div>
                     <div class="form-group">
-                        <label for="content">Machine's Description</label>
+                        <label for="content">Machine's Description*</label>
                         <textarea name="content" class = "form-control" id = "content" rows="8" cols="80" ngModel
                                                                                                           *ngIf     = "!machineExists()"></textarea>
                         <textarea name="content" class = "form-control" id = "content" rows="8" cols="80" [ngModel] = "machine.content"
                                                                                                           *ngIf     = "machineExists()"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="status">Machine's Status</label>
+                        <label for="status">Machine's Status*</label>
                         <select class="form-control" name="status" *ngIf = "!machineExists()" [ngModel] = "defaultStatus">
                             <option value="ON">ON</option>
                             <option value="OFF">OFF</option>
@@ -28,9 +32,9 @@
                         </select>
                     </div><br/>
                     <div class="row">
-                        <div class="offset-3 col-md-6 text-center">
-                            <button type="submit" class="btn btn-dark btn-block" *ngIf = "!machineExists()">Save Machine</button>
-                            <button type="submit" class="btn btn-dark btn-block" *ngIf = "machineExists()" >Update Machine</button>
+                        <div class="offset-md-3 col-md-6 text-center">
+                            <button id = "formButton" type="submit" class="btn btn-dark btn-block" *ngIf = "!machineExists()">Save Machine</button>
+                            <button id = "formButton" type="submit" class="btn btn-dark btn-block" *ngIf = "machineExists()" >Update Machine</button>
                         </div>
                     </div>
                 </form>
@@ -38,3 +42,4 @@
         </div>
     </div>
 </div>
+<ng-flash-message></ng-flash-message>

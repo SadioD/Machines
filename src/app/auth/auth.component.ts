@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router }            from '@angular/router';
-import { UserManager }       from '../models/user.manager';
-import { AuthService }       from '../services/auth.service';
-import { Subscription }      from 'rxjs';
+import { Router }                       from '@angular/router';
+import { NgForm }                       from '@angular/forms';
+import { UserManager }                  from '../models/user.manager';
+import { AuthService }                  from '../services/auth.service';
+import { Subscription }                 from 'rxjs';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         );
         this.authService.emitUserSubject();
         this.loadTitle('Authentification');
+        this.loadScript('../../assets/js/authForm.js');
     }
 
     ngOnDestroy() {
@@ -40,9 +42,9 @@ export class AuthComponent implements OnInit, OnDestroy {
         return this.authService.isAuth();
     }
     // Authentifie l'User
-    onlogUserIn() {
-        this.authService.logUserIn().then(() => {
-            this.router.navigate(['add-new-machine']);
+    onlogUserIn(authForm: NgForm) {
+        this.authService.logUserIn(authForm.value).then(() => {
+            this.router.navigate(['profile']);
         });
     }
     // Déconnecte l'User
@@ -51,6 +53,13 @@ export class AuthComponent implements OnInit, OnDestroy {
     }//-----------------------------------------------------------------------------------------------------------------------------------------
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TITLE AND SCRIPTS ----------------------------------------------------------------------------------------------------------------------
+    // Permet de charger des fichiers JS
+    public loadScript(url) {
+        let node = document.createElement('script');
+        node.src = url;
+        node.type = 'text/javascript';
+        document.getElementsByTagName('body')[0].appendChild(node);
+    }
     // Permet de charger le titre de la page
     public loadTitle(title) {
         document.getElementsByTagName('title')[0].innerHTML = title;

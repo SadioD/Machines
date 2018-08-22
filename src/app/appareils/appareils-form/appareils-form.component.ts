@@ -56,6 +56,7 @@ export class AppareilsFormComponent implements OnInit {
         });
         // On redirige
         setTimeout(() => {
+
             if(this.machineExists())  this.router.navigate(['machines-list/' + this.machine.id]);
             else                      this.router.navigate(['machines-list']);
         }, 4000);
@@ -68,6 +69,13 @@ export class AppareilsFormComponent implements OnInit {
         node.src = url;
         node.type = 'text/javascript';
         document.getElementsByTagName('body')[0].appendChild(node);
+    }
+    // Permet de charger des fichiers CC
+    public loadCSS(url) {
+        let node = document.createElement('link');
+        node.href = url;
+        node.rel = 'stylesheet';
+        document.getElementsByTagName('head')[0].appendChild(node);
     }
     // Permet de charger le titre de la page
     public loadTitle(title) {

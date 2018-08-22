@@ -3,7 +3,7 @@ import { Subject }     from 'rxjs';
 
 export class AuthService {
     userSubject = new Subject<UserManager>();
-    private user: UserManager = new UserManager(1, 'Douze');
+    private user: UserManager = new UserManager;
 
     // Emet l'objet User pour les autres components puissent y accéder
     emitUserSubject() {
@@ -15,13 +15,14 @@ export class AuthService {
         return this.user.status;
     }
     // Connecte l'User
-    logUserIn() {
+    logUserIn(sessionUser: UserManager) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                this.user.status = true,
+                this.user.status = true;
+                this.user.pseudo = sessionUser.pseudo;
                 this.emitUserSubject();
                 resolve(this.user.status);
-            }, 2000);
+            }, 1000);
         });
     }
     // Déconnecte l'User

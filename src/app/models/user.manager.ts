@@ -1,14 +1,10 @@
 export class UserManager {
-    id:     number;
-    name:   string;
-    email:  string;
+    pseudo:   string;
     status: boolean;
 
-    constructor(_id: number, _name: string) {
-        this.id     = _id;
-        this.name   = _name;
-        this.email  = 'dialloamadou1@yahoo.fr';
+    constructor() {
+        this.pseudo = '';
         this.status = false;
     }
-    
+
 }
