@@ -1,3 +1,40 @@
-<p>
-  appareils-form works!
-</p>
+<ng-flash-message></ng-flash-message>
+<div class="row">
+    <div class="offset-2 col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <form id = "myForm" #f = "ngForm" (ngSubmit) = "onSubmit(f)">
+                    <div class="form-group">
+                        <label for="name">Machine's Name</label>
+                        <input type="text" name="name" id = "name" class = "form-control" *ngIf = "!machineExists()" ngModel />
+                        <input type="text" name="name" id = "name" class = "form-control" *ngIf = "machineExists()"  [ngModel] = "machine.name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Machine's Description</label>
+                        <textarea name="content" class = "form-control" id = "content" rows="8" cols="80" ngModel
+                                                                                                          *ngIf     = "!machineExists()"></textarea>
+                        <textarea name="content" class = "form-control" id = "content" rows="8" cols="80" [ngModel] = "machine.content"
+                                                                                                          *ngIf     = "machineExists()"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Machine's Status</label>
+                        <select class="form-control" name="status" *ngIf = "!machineExists()" [ngModel] = "defaultStatus">
+                            <option value="ON">ON</option>
+                            <option value="OFF">OFF</option>
+                        </select>
+                        <select class="form-control" name="status" *ngIf = "machineExists()" [ngModel] = "machine.status">
+                            <option value="ON">ON</option>
+                            <option value="OFF">OFF</option>
+                        </select>
+                    </div><br/>
+                    <div class="row">
+                        <div class="offset-3 col-md-6 text-center">
+                            <button type="submit" class="btn btn-dark btn-block" *ngIf = "!machineExists()">Save Machine</button>
+                            <button type="submit" class="btn btn-dark btn-block" *ngIf = "machineExists()" >Update Machine</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

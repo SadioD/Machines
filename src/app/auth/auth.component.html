@@ -1,13 +1,20 @@
-<div class="row">
-    <div class="col-md-1-12">
-        <h2>Changing your status</h2>
-        <p>To change your status, please click the below button</p>
-    </div>
-</div><br/>
-<div class="row">
-    <div class="offset-1 col-md-2">
-        <button type="button" class="btn btn-success" *ngIf = "!isAuth()" (click) = "onlogUserIn()" >Sign In!</button>
-        <button type="button" class="btn btn-danger" *ngIf = "isAuth()"  (click) = "onlogUserOut()" >Sign Out!</button>
+<div class="row" style = "margin-top: 5%; margin-bottom: 2%;">
+    <div class="offset-2 col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h2>Changing your status</h2>
+                        <p>To change your status, please click the below button</p>
+                    </div>
+                </div>
+                <div class="row" style = "margin-top: 24%;">
+                    <div class="offset-3 col-md-6">
+                        <button type="button" class="btn btn-success btn-block" *ngIf = "!isAuth()" (click) = "onlogUserIn()" >Sign In!</button>
+                        <button type="button" class="btn btn-danger btn-block" *ngIf = "isAuth()"  (click) = "onlogUserOut()" >Sign Out!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<div style = "margin-bottom: 24%;"></div>

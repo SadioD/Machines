@@ -10,6 +10,7 @@ import { Subscription }                 from 'rxjs';
 })
 
 export class ProfileComponent implements OnInit, OnDestroy {
+    // ATTRIBUTS + CONSTR + ONINIT + ONDESTROY -----------------------------------------------------------------------------------------------------------------
     user: UserManager;
     userSubscription: Subscription;
 
@@ -25,25 +26,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
             }
         );
         this.authService.emitUserSubject();
-
-        this.loadScript('../../assets/js/test.js');
-        this.loadTitle('Profile');
+        this.loadTitle('The Profile');
     }
 
     ngOnDestroy() {
         this.userSubscription.unsubscribe();
-    }
-
-    // Permet de charger des fichiers JS
-    public loadScript(url) {
-        let node = document.createElement('script');
-        node.src = url;
-        node.type = 'text/javascript';
-        document.getElementsByTagName('body')[0].appendChild(node);
-    }
-
+    }//-----------------------------------------------------------------------------------------------------------------------------------------
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // TITLE AND SCRIPTS ----------------------------------------------------------------------------------------------------------------------
     // Permet de charger le titre de la page
     public loadTitle(title) {
         document.getElementsByTagName('title')[0].innerHTML = title;
-    }
+    }//-----------------------------------------------------------------------------------------------------------------------------------------
 }

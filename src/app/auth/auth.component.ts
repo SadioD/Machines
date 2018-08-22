@@ -11,6 +11,7 @@ import { Subscription }      from 'rxjs';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit, OnDestroy {
+    // ATTRIBUTS + CONSTR + ONINIT + ONDESTROY -----------------------------------------------------------------------------------------------------------------
     user: UserManager;
     userSubscription: Subscription;
 
@@ -26,12 +27,14 @@ export class AuthComponent implements OnInit, OnDestroy {
             }
         );
         this.authService.emitUserSubject();
+        this.loadTitle('Authentification');
     }
 
     ngOnDestroy() {
         this.userSubscription.unsubscribe();
-    }
-
+    }//-----------------------------------------------------------------------------------------------------------------------------------------
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // METHODES ----------------------------------------------------------------------------------------------------------------------
     // Vérifie si l'User est connecté
     isAuth() {
         return this.authService.isAuth();
@@ -39,12 +42,17 @@ export class AuthComponent implements OnInit, OnDestroy {
     // Authentifie l'User
     onlogUserIn() {
         this.authService.logUserIn().then(() => {
-            this.router.navigate(['/profile']);
+            this.router.navigate(['add-new-machine']);
         });
     }
     // Déconnecte l'User
     onlogUserOut() {
         this.authService.logUserOut();
-    }
-
+    }//-----------------------------------------------------------------------------------------------------------------------------------------
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // TITLE AND SCRIPTS ----------------------------------------------------------------------------------------------------------------------
+    // Permet de charger le titre de la page
+    public loadTitle(title) {
+        document.getElementsByTagName('title')[0].innerHTML = title;
+    }//-----------------------------------------------------------------------------------------------------------------------------------------
 }

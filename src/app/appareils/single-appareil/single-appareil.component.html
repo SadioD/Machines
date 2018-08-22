@@ -14,9 +14,14 @@
         </ul>
     </div>
 </div><br/>
-<div class="row">
-    <div class="offset-md-5 col-md-2 text-center">
-        <button type="button" class="btn btn-dark btn-block" routerLink = "/machines-list">Retour</button>
+<div class="row" style = "margin-bottom: 10%;">
+    <div class="offset-2 col-md-3 text-center">
+        <button type="button" class="btn btn-dark btn-block" routerLink = "/machines-list">Back to List</button>
+    </div>
+    <div class="col-md-3 text-center">
+        <button type="button" class="btn btn-danger btn-block" (click)  = "onDeleteMachine()">Delete Machine</button>
+    </div>
+    <div class="col-md-3 text-center">
+        <button type="button" class="btn btn-success btn-block" (click) = "onUpdateMachine()">Update Machine</button>
     </div>
 </div>
-<div style = "margin-bottom: 10%;"></div>
