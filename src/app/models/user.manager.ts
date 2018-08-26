@@ -1,10 +1,12 @@
 export class UserManager {
     pseudo:   string;
-    status: boolean;
+    status: string;
+    id: string;
 
     constructor() {
+        this.id     = '0';
         this.pseudo = '';
-        this.status = false;
+        this.status = 'OFF';
     }
 
 }

@@ -1,10 +1,13 @@
-import { AppareilManager } from '../models/appareil.manager';
-import { Subject }         from 'rxjs';
+import { AppareilManager }   from '../models/appareil.manager';
+import { Subject }           from 'rxjs';
+import { Injectable }        from '@angular/core';
+import { HttpClient }        from '@angular/common/http';
 
-
+@Injectable()
 export class AppareilService {
-    appareilsSubject = new Subject<any[]>();
+    constructor(private httpClient: HttpClient) { }
 
+    appareilsSubject = new Subject<AppareilManager[]>();
     private appareils = [
         new AppareilManager(1, 'TV'),
         new AppareilManager(2, 'PS4'),

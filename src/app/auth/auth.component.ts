@@ -39,7 +39,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     // METHODES ----------------------------------------------------------------------------------------------------------------------
     // Vérifie si l'User est connecté
     isAuth() {
-        return this.authService.isAuth();
+        return this.user.status === 'ON' ? true : false;
     }
     // Authentifie l'User
     onlogUserIn(authForm: NgForm) {

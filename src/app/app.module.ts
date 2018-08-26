@@ -4,9 +4,10 @@ import { NgModule }                 from '@angular/core';
 import { FormsModule }              from '@angular/forms';
 import { Routes }                   from '@angular/router';
 import { RouterModule }             from '@angular/router';
+import { HttpClientModule }         from '@angular/common/http';
 
 // Librairies externes
-import { NgFlashMessagesModule }    from 'ng-flash-messages';
+import { NgFlashMessagesModule }    from 'ng-flash-messages';                       // flas messages
 
 // Services
 import { AuthService }              from './services/auth.service';
@@ -27,15 +28,15 @@ import { FooterComponent }          from './footer/footer.component';
 import { AppareilsFormComponent }   from './appareils/appareils-form/appareils-form.component';
 
 const appRoutes: Routes = [
-    { path: 'authentification'      ,                           component: AuthComponent },
-    { path: 'add-new-machine'       , canActivate: [AuthGuard], component: AppareilsFormComponent },
-    { path: 'update-machine/:id'    , canActivate: [AuthGuard], component: AppareilsFormComponent },
-    { path: 'machines-list'         , canActivate: [AuthGuard], component: AppareilsViewComponent },
-    { path: 'machines-list/:id'     , canActivate: [AuthGuard], component: SingleAppareilComponent },
-    { path: 'profile'               , canActivate: [AuthGuard], component: ProfileComponent },
-    { path: 'not-found'             ,                           component: ForOhforComponent },
-    { path: ''                      , canActivate: [AuthGuard], component: AppareilsViewComponent },
-    { path: ':id'                   , canActivate: [AuthGuard], component: SingleAppareilComponent },
+    { path: 'authentification'      ,                                   component: AuthComponent },
+    { path: 'add-new-machine'       , canActivate: [AuthGuard],         component: AppareilsFormComponent },
+    { path: 'update-machine/:id'    , canActivate: [AuthGuard],         component: AppareilsFormComponent },
+    { path: 'machines-list'         , canActivate: [AuthGuard],         component: AppareilsViewComponent },
+    { path: 'machines-list/:id'     , canActivate: [AuthGuard],         component: SingleAppareilComponent },
+    { path: 'profile'               , canActivate: [AuthGuard],         component: ProfileComponent },
+    { path: 'not-found'             ,                                   component: ForOhforComponent },
+    { path: ':id'                   , canActivate: [AuthGuard],         component: SingleAppareilComponent },
+    { path: ''                      , redirectTo: 'authentification',   pathMatch: 'full' },  // si beug rajout pathMatch: 'full'
     { path: '**'                    , redirectTo: 'not-found' }
 ];
 
@@ -56,6 +57,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
     NgFlashMessagesModule.forRoot()

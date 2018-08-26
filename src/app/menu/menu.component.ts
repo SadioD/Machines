@@ -30,7 +30,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
     // Vérifie si l'user est connecté
     isAuth() {
-        return this.authService.isAuth();
+        return this.user.status === 'ON' ? true : false;
     }
 
     ngOnDestroy() {
