@@ -55,7 +55,7 @@ export class AppareilService {
         this.emitAppareilsSubject();
     }//------------------------------------------------------------------------------------------------------------------------------------
     // Retourne l'appareil en fonction de l'id fourni (pour accéder à la page single-appareil-component) -----------------------------------------------------------------------------------------------------------
-    getMachineByID(machineId: string) {
+    getMachineByID(machineId: number) {
         const machine = this.appareils.find((s) => {
             return s.id === machineId;
         });

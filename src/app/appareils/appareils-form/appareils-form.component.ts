@@ -22,7 +22,7 @@ export class AppareilsFormComponent implements OnInit {
 
     ngOnInit() {
         if(this.machineExists()) {
-            this.machine = this.appareilService.getMachineByID(+this.route.snapshot.params['id']);
+            this.machine = this.appareilService.getMachineByID(this.route.snapshot.params['id']);
             this.loadTitle('Update Machine');
         }
         else {
