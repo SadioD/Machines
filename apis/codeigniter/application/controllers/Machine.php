@@ -5,13 +5,18 @@ class Machine extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Headers: X-Requested-Width, Origin, Content-Type, X-Auth-Token');
+        header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+
         $this->load->model('machineManager');
     }//--------------------------------------------------------------------------------------------------------------------------------------------
     // METHODS -------------------------------------------------------------------------------------------------------------------------------
     // Permet de recupérer la liste des machines
     public function getMachinesList()
     {
-        echo 'test';
+        $list = $this->machineManager->getData();
+        $this->sendResponse($list);
     }//--------------------------------------------------------------------------------------------------------------------------------------------
     // Permet de supprimer une machine de la liste
     public function deleteMachine($id)
@@ -35,7 +40,6 @@ class Machine extends CI_Controller
     // Permet de
     protected function sendResponse($response)
     {
-        /*$data = array('keyWord' => 'userNotFound', 'response' => 'l\'adresse email entrée est invalide!');
-        echo json_encode($data);*/
+        echo json_encode($response[0]);
     }//----------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

@@ -3,21 +3,35 @@ import { Subject }           from 'rxjs';
 import { Injectable }        from '@angular/core';
 import { HttpClient }        from '@angular/common/http';
 
+
 @Injectable()
 export class AppareilService {
     constructor(private httpClient: HttpClient) { }
 
     appareilsSubject = new Subject<AppareilManager[]>();
-    private appareils = [
-        new AppareilManager(1, 'TV'),
-        new AppareilManager(2, 'PS4'),
-        new AppareilManager(3, 'Micro-ondes')
-    ];
+    appareils: AppareilManager[];
 
     // Emet une copie de l'array appareils  (en usant la méthode slice() on émet seulement la copie)--------------------------------------
     emitAppareilsSubject() {
         this.appareilsSubject.next(this.appareils.slice());
     }//------------------------------------------------------------------------------------------------------------------------------------
+    // Recupère la liste des appareils ----------------------------------------------------------------------------------------------------
+    getMachinesList() {
+        return new Promise((resolve, reject) => {
+            this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/machine/getMachinesList/').subscribe(
+                (response:AppareilManager[]) => {
+                    this.appareils = response;
+                    console.log(this.appareils);
+
+                    this.emitAppareilsSubject();
+                    resolve(true);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        });
+    }//------------------------------------------------------------------------------------------------------------------------------------------
     // Allume tous les appareils ---------------------------------------------------------------------------------------------------------------------
     switchAllON() {
         for(let machine of this.appareils) {
@@ -57,12 +71,7 @@ export class AppareilService {
     // => On attribue le bon ID à la nouvelle machine + une date de création et on l'ajoute à l'array des machines
     saveThisMachine(machine: AppareilManager) {
         machine.id           = this.appareils[this.appareils.length - 1].id + 1;
-        machine.purchaseDate = new Promise((resolve, reject) => {
-            const date = new Date;
-            setTimeout(() => {
-                resolve(date);
-            }, 3000);
-        });
+        machine.purchaseDate = new Date();
         this.appareils.push(machine);
         this.emitAppareilsSubject();
     }//------------------------------------------------------------------------------------------------------------------------------------

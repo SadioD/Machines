@@ -9,7 +9,6 @@ class User extends CI_Controller
         header('Access-Control-Allow-Headers: X-Requested-Width, Origin, Content-Type, X-Auth-Token');
         header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
 
-
         $this->load->model('userManager');
     }//--------------------------------------------------------------------------------------------------------------------------------------------
     // METHODS -------------------------------------------------------------------------------------------------------------------------------
@@ -31,10 +30,11 @@ class User extends CI_Controller
         $user = $this->userManager->getData('*', array('id' => $id));
         $this->sendResponse($user);
     }//--------------------------------------------------------------------------------------------------------------------------------------------
-    // Permet de supprimer un user (lors de la déconnexion pdans l'app des machines)
+    // Permet de supprimer un user (lors de la déconnexion de l'app des machines)
     public function removeUser($id)
     {
-
+        $this->userManager->deleteEntry(['id' => (int)($id)]);
+        $this->sendResponse([true]);
     }//--------------------------------------------------------------------------------------------------------------------------------------------
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

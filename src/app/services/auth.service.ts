@@ -20,17 +20,22 @@ export class AuthService {
     // Vérifie si l'user est connecté
     isAuth() {
         return new Promise((resolve, reject) => {
-            this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/user/getUser/' + sessionStorage.getItem('userId')).subscribe(
-                (response: UserManager) => {
-                    this.user = response;
+            if(sessionStorage.getItem('userId')) {
+                this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/user/getUser/' + sessionStorage.getItem('userId')).subscribe(
+                    (response: UserManager) => {
+                        this.user = response;
 
-                    this.emitUserSubject();
-                    this.user.status === 'ON' ? resolve(true) : resolve(false);
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
+                        this.emitUserSubject();
+                        this.user.status === 'ON' ? resolve(true) : resolve(false);
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+            }
+            else {
+                resolve(false);
+            }
         });
     }
     // Connecte l'User (grace à sessionStorage.getItem, setItem, removeItem or clear[vide toyt])
@@ -52,7 +57,14 @@ export class AuthService {
     }
     // Déconnecte l'User
     logUserOut() {
-        this.user.status = 'OFF';
-        this.emitUserSubject();
+        this.httpClient.post('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/user/removeUser', sessionStorage.getItem('userId')).subscribe(
+            (response: any) => {
+                this.user.status = 'OFF';
+                this.emitUserSubject();
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
     }//-----------------------------------------------------------------------------------------------------------------------------------------------------
 }

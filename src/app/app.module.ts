@@ -7,7 +7,7 @@ import { RouterModule }             from '@angular/router';
 import { HttpClientModule }         from '@angular/common/http';
 
 // Librairies externes
-import { NgFlashMessagesModule }    from 'ng-flash-messages';                       // flas messages
+import { NgFlashMessagesModule }    from 'ng-flash-messages';                       // flash messages
 
 // Services
 import { AuthService }              from './services/auth.service';
