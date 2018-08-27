@@ -21,7 +21,7 @@ export class AppareilService {
     // Recupère la liste des appareils ----------------------------------------------------------------------------------------------------
     getMachinesList() {
         this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/machine/getMachinesList').subscribe(
-            (response:AppareilManager[]) => {
+            (response: AppareilManager[]) => {
                 this.appareils = response ? response : [];
                 this.emitAppareilsSubject();
             },
@@ -30,29 +30,32 @@ export class AppareilService {
             }
         );
     }//------------------------------------------------------------------------------------------------------------------------------------------
-    // Allume tous les appareils ---------------------------------------------------------------------------------------------------------------------
-    switchAllON() {
+    // Allume/Eteint tous les appareils -----------------------------------------------------------------------------------------------------------
+    switchAll(switched: string) {
         for(let machine of this.appareils) {
-            machine.status = 'ON';
+            machine.status = switched;
             this.emitAppareilsSubject();
         }
+        this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/machine/switchALL/' + switched).subscribe(
+            (response: any) => { },
+            (error)    => { console.log(error) }
+        );
     }//------------------------------------------------------------------------------------------------------------------------------------
-    // Eteint tous les appareils -----------------------------------------------------------------------------------------------------------
-    switchAllOFF() {
-        for(let machine of this.appareils) {
-            machine.status = 'OFF';
-            this.emitAppareilsSubject();
-        }
-    }//------------------------------------------------------------------------------------------------------------------------------------
-    // Allume un appareil -----------------------------------------------------------------------------------------------------------
+    /*//  Allume un appareil -----------------------------------------------------------------------------------------------------------
     switchON(index: number) {
         this.appareils[index].status = 'ON';
         this.emitAppareilsSubject();
-    }//------------------------------------------------------------------------------------------------------------------------------------
+    }*///------------------------------------------------------------------------------------------------------------------------------------
     // Eteint un appareil -----------------------------------------------------------------------------------------------------------
-    switchOFF(index: number) {
-        this.appareils[index].status = 'OFF';
+    switchTHIS(index: number, switched: string) {
+        this.appareils[index].status = switched;
+        let machineID                = this.appareils[index].id;
+
         this.emitAppareilsSubject();
+        this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/machine/switchTHIS/' + machineID+ '/' + switched).subscribe(
+            (response: any) => { },
+            (error)    => { console.log(error) }
+        );
     }//------------------------------------------------------------------------------------------------------------------------------------
     // Retourne l'appareil en fonction de l'id fourni (pour accéder à la page single-appareil-component) -----------------------------------------------------------------------------------------------------------
     getMachineByID(machineId: number) {

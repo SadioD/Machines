@@ -34,11 +34,11 @@ export class AppareilsViewComponent implements OnInit, OnDestroy {
 
     // Allume tous les appareils
     onSwitchAllON() {
-        this.appareilService.switchAllON();
+        this.appareilService.switchAll('ON');
     }
     // Eteint tous les appareils
     onSwitchAllOFF() {
-        this.appareilService.switchAllOFF();
+        this.appareilService.switchAll('OFF');
     }
 
 }

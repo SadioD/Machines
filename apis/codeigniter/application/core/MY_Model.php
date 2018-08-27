@@ -34,7 +34,7 @@ class MY_Model extends CI_Model
                                ->insert($this->table);
     }
     // Cette méthode modifie une entrée en BDD
-    public function updateEntry($where, $escaped_data = array(), $not_escaped_data = array())
+    public function updateEntry($where = [], $escaped_data = array(), $not_escaped_data = array())
     {
         if(empty($escaped_data) AND empty($not_escaped_data))
         {

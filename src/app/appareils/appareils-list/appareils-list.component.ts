@@ -17,11 +17,11 @@ export class AppareilsListComponent implements OnInit {
 
     // Allume un appareil
     onSwitchON() {
-        this.appareilService.switchON(this.index);
+        this.appareilService.switchTHIS(this.index, 'ON');
     }
     // Eteint un appareil
     onSwitchOFF() {
-        this.appareilService.switchOFF(this.index);
+        this.appareilService.switchTHIS(this.index, 'OFF');
     }
 
 }

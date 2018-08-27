@@ -19,25 +19,27 @@ export class AuthService {
     // METHODS -----------------------------------------------------------------------------------------------------------------------------
     // Vérifie si l'user est connecté
     isAuth() {
-        if(sessionStorage.getItem('userId')) {
-            return this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/user/getUser/' + sessionStorage.getItem('userId')).subscribe(
-                (response: UserManager) => {
-                    if(response) {
-                        this.user = response;
-                        this.emitUserSubject();
+        return new Promise((resolve, reject) => {
+            if(sessionStorage.getItem('userId')) {
+                this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/user/getUser/' + sessionStorage.getItem('userId')).subscribe(
+                    (response: UserManager) => {
+                        if(response) {
+                            this.user = response;
+                            this.emitUserSubject();
 
-                        return this.user.status === 'ON' ? true : false;
+                            this.user.status === 'ON' ? resolve(true) : resolve(false);
+                        }
+                        resolve(false);
+                    },
+                    (error) => {
+                        console.log(error);
                     }
-                    return false;
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
-        }
-        else {
-            return false;
-        }
+                );
+            }
+            else {
+                resolve(false);
+            }
+        });
     }
 
     // Connecte l'User (grace à sessionStorage.getItem, setItem, removeItem or clear[vide toyt])

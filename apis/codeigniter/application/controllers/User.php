@@ -46,7 +46,5 @@ class User extends CI_Controller
     protected function sendResponse($response)
     {
         echo json_encode($response[0]);
-        /*$data = array('keyWord' => 'userNotFound', 'response' => 'l\'adresse email entrée est invalide!');
-        echo json_encode($data);*/
     }//----------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
