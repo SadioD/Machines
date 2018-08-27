@@ -16,7 +16,7 @@ class Machine extends CI_Controller
     public function getMachinesList()
     {
         $list = $this->machineManager->getData();
-        $this->sendResponse($list);
+        $this->sendResponse('machinesList', $list);
     }//--------------------------------------------------------------------------------------------------------------------------------------------
     // Permet de supprimer une machine de la liste
     public function deleteMachine($id)
@@ -38,8 +38,10 @@ class Machine extends CI_Controller
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Fonctions Internes -------------------------------------------------------------------------------------------------------------------------
     // Permet de
-    protected function sendResponse($response)
+    protected function sendResponse($request, $response)
     {
-        echo json_encode($response[0]);
+        if($request == 'machinesList') {
+            echo json_encode($response);
+        }
     }//----------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

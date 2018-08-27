@@ -6,31 +6,29 @@ import { HttpClient }        from '@angular/common/http';
 
 @Injectable()
 export class AppareilService {
-    constructor(private httpClient: HttpClient) { }
 
     appareilsSubject = new Subject<AppareilManager[]>();
-    appareils: AppareilManager[];
+    appareils: AppareilManager[] = [];
+
+    constructor(private httpClient: HttpClient) {
+        this.getMachinesList();
+    }
 
     // Emet une copie de l'array appareils  (en usant la méthode slice() on émet seulement la copie)--------------------------------------
     emitAppareilsSubject() {
-        this.appareilsSubject.next(this.appareils.slice());
+        this.appareilsSubject.next(this.appareils);
     }//------------------------------------------------------------------------------------------------------------------------------------
     // Recupère la liste des appareils ----------------------------------------------------------------------------------------------------
     getMachinesList() {
-        return new Promise((resolve, reject) => {
-            this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/machine/getMachinesList/').subscribe(
-                (response:AppareilManager[]) => {
-                    this.appareils = response;
-                    console.log(this.appareils);
-
-                    this.emitAppareilsSubject();
-                    resolve(true);
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
-        });
+        this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/machine/getMachinesList').subscribe(
+            (response:AppareilManager[]) => {
+                this.appareils = response ? response : [];
+                this.emitAppareilsSubject();
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
     }//------------------------------------------------------------------------------------------------------------------------------------------
     // Allume tous les appareils ---------------------------------------------------------------------------------------------------------------------
     switchAllON() {
@@ -57,7 +55,7 @@ export class AppareilService {
         this.emitAppareilsSubject();
     }//------------------------------------------------------------------------------------------------------------------------------------
     // Retourne l'appareil en fonction de l'id fourni (pour accéder à la page single-appareil-component) -----------------------------------------------------------------------------------------------------------
-    getMachineByID(machineId: number) {
+    getMachineByID(machineId: string) {
         const machine = this.appareils.find((s) => {
             return s.id === machineId;
         });

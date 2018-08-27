@@ -19,25 +19,27 @@ export class AuthService {
     // METHODS -----------------------------------------------------------------------------------------------------------------------------
     // Vérifie si l'user est connecté
     isAuth() {
-        return new Promise((resolve, reject) => {
-            if(sessionStorage.getItem('userId')) {
-                this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/user/getUser/' + sessionStorage.getItem('userId')).subscribe(
-                    (response: UserManager) => {
+        if(sessionStorage.getItem('userId')) {
+            return this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/user/getUser/' + sessionStorage.getItem('userId')).subscribe(
+                (response: UserManager) => {
+                    if(response) {
                         this.user = response;
-
                         this.emitUserSubject();
-                        this.user.status === 'ON' ? resolve(true) : resolve(false);
-                    },
-                    (error) => {
-                        console.log(error);
+
+                        return this.user.status === 'ON' ? true : false;
                     }
-                );
-            }
-            else {
-                resolve(false);
-            }
-        });
+                    return false;
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        }
+        else {
+            return false;
+        }
     }
+
     // Connecte l'User (grace à sessionStorage.getItem, setItem, removeItem or clear[vide toyt])
     logUserIn(sessionUser: UserManager) {
         return new Promise((resolve, reject) => {
@@ -57,8 +59,9 @@ export class AuthService {
     }
     // Déconnecte l'User
     logUserOut() {
-        this.httpClient.post('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/user/removeUser', sessionStorage.getItem('userId')).subscribe(
+        this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/user/removeUser/' + sessionStorage.getItem('userId')).subscribe(
             (response: any) => {
+                sessionStorage.removeItem('userId');
                 this.user.status = 'OFF';
                 this.emitUserSubject();
             },

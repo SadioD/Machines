@@ -20,7 +20,7 @@ export class SingleAppareilComponent implements OnInit {
                 private flashMessage:    NgFlashMessageService) { }
 
     ngOnInit() {
-        this.machine = this.appareilService.getMachineByID(+this.route.snapshot.params['id']);
+        this.machine = this.appareilService.getMachineByID(this.route.snapshot.params['id']);
 
         // S'il n'existe pas de machines correspondant à l'id recu en GET => on redirige
         if(!this.machine) this.router.navigate(['/machines-list']);

@@ -28,7 +28,9 @@ class User extends CI_Controller
     public function getUser($id)
     {
         $user = $this->userManager->getData('*', array('id' => $id));
-        $this->sendResponse($user);
+
+        isset($user) && !empty($user) ? $this->sendResponse($user) : $this->sendResponse([false]);
+
     }//--------------------------------------------------------------------------------------------------------------------------------------------
     // Permet de supprimer un user (lors de la déconnexion de l'app des machines)
     public function removeUser($id)

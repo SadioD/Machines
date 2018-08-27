@@ -7,7 +7,7 @@
                 {{ machine.content }}
             </li>
             <li class = "list-group-item">
-                Purchase Date - {{ machine.purchaseDate | async | date }}
+                Purchase Date - {{ machine.purchaseDate | date }}
             </li>
             <li [ngClass] = "getStatusClass()">
                 Machine's status - {{ machine.status }}
