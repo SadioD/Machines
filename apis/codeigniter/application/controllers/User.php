@@ -18,11 +18,11 @@ class User extends CI_Controller
         $_POST = json_decode(file_get_contents('php://input'), true);
         if(json_encode($_POST) != 'null')
         {
-            // On save l'user + on le recupère depuis la BDD + on crée la variable de session et  envoie la réponse
+            // On save l'user + on le recupère depuis la BDD et  envoie la réponse
             $this->userManager->addEntry(array('pseudo' => $_POST['pseudo'], 'status' => 'ON'));
             $user = $this->userManager->getData('*', array('pseudo' => $_POST['pseudo']));
+            $this->sendResponse($user);
         }
-        $this->sendResponse($user);
     }//--------------------------------------------------------------------------------------------------------------------------------------------
     // Permet de récupérer un User par AuthGuard (lors du rafraichissement par exemple )
     public function getUser($id)

@@ -24,14 +24,36 @@ class Machine extends CI_Controller
 
     }//--------------------------------------------------------------------------------------------------------------------------------------------
     // Permet d'ajouter une machine à la liste
-    public function addNewMachine($machine)
+    public function addNewMachine()
     {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        if(json_encode($_POST) != 'null')
+        {
+            // On save la machine
+            $this->machineManager->addEntry(array('name'         => $_POST['name'],
+                                                  'content'      => $_POST['content'],
+                                                  'status'       => $_POST['status']),
+                                            array('purchaseDate' => 'NOW()'));
 
+            // On la recupère depuis la BDD
+            $machine = $this->machineManager->getData('*', array('name'    => $_POST['name'],
+                                                                 'content' => $_POST['content']));
+            // On envoie la réponse
+            isset($machine) && !empty($machine) ? $this->sendResponse('new Machine', $machine) : $this->sendResponse('new Machine', [false]);
+        }
     }//--------------------------------------------------------------------------------------------------------------------------------------------
     // Permet de modifier une machine à la liste
-    public function updateMachine($machine)
+    public function updateMachine()
     {
-
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        if(json_encode($_POST) != 'null')
+        {
+            $this->machineManager->updateEntry(array('id'      => $_POST['id']),
+                                               array('name'    => $_POST['name'],
+                                                     'content' => $_POST['content'],
+                                                     'status'  => $_POST['status']));
+            $this->sendResponse('update Machine', [true]);
+        }
     }//--------------------------------------------------------------------------------------------------------------------------------------------
     // Permet d'allumer/ Eteindre toutes les machines
     public function switchALL($status)
@@ -52,10 +74,10 @@ class Machine extends CI_Controller
     // Permet de
     protected function sendResponse($request, $response)
     {
-        if($request == 'machinesList') {
+        if(   $request == 'machinesList') {
             echo json_encode($response);
         }
-        elseif($request == 'switch') {
+        elseif($request == 'switch' || $request == 'new Machine' || $request == 'update Machine') {
             echo json_encode($response[0]);
         }
     }//----------------------------------------------------------------------------------------------------------------------------------------------------------------

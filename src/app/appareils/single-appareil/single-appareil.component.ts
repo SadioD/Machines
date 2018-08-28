@@ -12,7 +12,7 @@ import { AppareilService }           from '../../services/appareil.service';
 
 export class SingleAppareilComponent implements OnInit {
     // ATTRIBUTS + CONSTR + ONINIT + ONDESTROY -----------------------------------------------------------------------------------------------------------------
-    machine: AppareilManager | any;
+    machine: AppareilManager = new AppareilManager;
 
     constructor(private router:          Router,
                 private route:           ActivatedRoute,
@@ -20,11 +20,15 @@ export class SingleAppareilComponent implements OnInit {
                 private flashMessage:    NgFlashMessageService) { }
 
     ngOnInit() {
-        this.machine = this.appareilService.getMachineByID(this.route.snapshot.params['id']);
-
-        // S'il n'existe pas de machines correspondant à l'id recu en GET => on redirige
-        if(!this.machine) this.router.navigate(['/machines-list']);
-        this.loadTitle(this.machine.name);
+        this.appareilService.getMachineByID(this.route.snapshot.params['id']).then((appareil: AppareilManager) => {
+            if(!appareil) {
+                this.router.navigate(['/machines-list']);
+            }
+            else {
+                this.loadTitle(this.machine.name);
+                this.machine = appareil;
+            }
+        });        
     }//-----------------------------------------------------------------------------------------------------------------------------------------
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // METHODS ----------------------------------------------------------------------------------------------------------------------

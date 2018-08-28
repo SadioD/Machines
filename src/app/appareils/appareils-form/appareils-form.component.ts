@@ -13,7 +13,7 @@ import { AppareilService }          from '../../services/appareil.service';
 export class AppareilsFormComponent implements OnInit {
     // ATTRIBUTS + CONSTR + ONINIT -----------------------------------------------------------------------------------------------------------------
     defaultStatus = 'OFF';
-    machine: AppareilManager;
+    machine: AppareilManager = new AppareilManager;
 
     constructor(private appareilService:     AppareilService,
                 private router:              Router,
@@ -22,8 +22,15 @@ export class AppareilsFormComponent implements OnInit {
 
     ngOnInit() {
         if(this.machineExists()) {
-            this.machine = this.appareilService.getMachineByID(this.route.snapshot.params['id']);
-            this.loadTitle('Update Machine');
+            this.appareilService.getMachineByID(this.route.snapshot.params['id']).then((appareil: AppareilManager) => {
+                if(!appareil) {
+                    //this.router.navigate(['machines-list/' + this.route.snapshot.params['id']]);
+                }
+                else {
+                    this.loadTitle('Update Machine');
+                    this.machine = appareil;
+                }
+            });
         }
         else {
             this.loadTitle('Add New Machine');
@@ -41,12 +48,22 @@ export class AppareilsFormComponent implements OnInit {
     onSubmit(form: NgForm) {
         if(this.machineExists()) {
             form.value['id'] = +this.route.snapshot.params['id'];
-            this.appareilService.updateThisMachine(JSON.parse(JSON.stringify(form.value)));
+            this.appareilService.updateThisMachine(JSON.parse(JSON.stringify(form.value))).then(
+                (response) => { response ? this.redirectUser() : alert('Oups... Une erreur est survenue!'); },
+                (error)    => { console.log(error); }
+            );
         }
         else {
-            form.value['id'] = 0;
-            this.appareilService.saveThisMachine(JSON.parse(JSON.stringify(form.value)));
+            this.appareilService.saveThisMachine(JSON.parse(JSON.stringify(form.value))).then(
+                (response) => { response ? this.redirectUser() : alert('Oups... Une erreur est survenue!'); },
+                (error)    => { console.log(error); }
+            );
         }
+    }//-----------------------------------------------------------------------------------------------------------------------------------------
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // METHODS POUR EVITER DUPLICATION CODE ----------------------------------------------------------------------------------------------------------------------
+    // Affiche un message de succès et redirige une fois le formulaire validé
+    redirectUser() {
         // On affiche le flash message
         this.flashMessageService.showFlashMessage({
             messages:  ["The form has been successfully registered. You'll be redirected soon..."],
@@ -56,7 +73,6 @@ export class AppareilsFormComponent implements OnInit {
         });
         // On redirige
         setTimeout(() => {
-
             if(this.machineExists())  this.router.navigate(['machines-list/' + this.machine.id]);
             else                      this.router.navigate(['machines-list']);
         }, 4000);

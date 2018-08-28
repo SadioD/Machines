@@ -30,6 +30,9 @@ export class MenuComponent implements OnInit, OnDestroy {
 
     // Vérifie si l'user est connecté
     isAuth() {
+        /*this.authService.isAuth().then((response) => {
+            return response ? true : false ;
+        });*/
         return this.user.status === 'ON' ? true : false;
     }
 
