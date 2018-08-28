@@ -7,5 +7,8 @@ $(function() {
         if(myRegex.test($('#name').val()) && myRegex.test($('#content').val())) {
             $('button').attr('disabled', false);
         }
+        else {
+            $('button').attr('disabled', true); // j'ai rajouté cette ligne pour le boutton #updateForm
+        }
     });
 });//---------------------------------------------------------------------------------------------------------------------------------------------------------
