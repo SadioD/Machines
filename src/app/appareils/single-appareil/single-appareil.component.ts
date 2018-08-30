@@ -28,7 +28,7 @@ export class SingleAppareilComponent implements OnInit {
                 this.loadTitle(this.machine.name);
                 this.machine = appareil;
             }
-        });        
+        });
     }//-----------------------------------------------------------------------------------------------------------------------------------------
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // METHODS ----------------------------------------------------------------------------------------------------------------------
@@ -42,14 +42,17 @@ export class SingleAppareilComponent implements OnInit {
     }
     // Permet de supprimer une machine
     onDeleteMachine() {
-        this.appareilService.deleteThisMachine(this.machine);
-        this.flashMessage.showFlashMessage({
-            messages:  ["The machine has been successfully deleted. You'll be redirected soon..."],
-            dismissible: false,
-            timeout: false,
-            type: 'success'
+        this.appareilService.deleteThisMachine(this.machine).then((response) => {
+            if(response) {
+                this.flashMessage.showFlashMessage({
+                    messages:  ["The machine has been successfully deleted. You'll be redirected soon..."],
+                    dismissible: false,
+                    timeout: false,
+                    type: 'success'
+                });
+                setTimeout(() => { this.router.navigate(['machines-list']); }, 4000);
+            }
         });
-        setTimeout(() => { this.router.navigate(['machines-list']); }, 4000);
     }//-----------------------------------------------------------------------------------------------------------------------------------------
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TITLE AND SCRIPTS ----------------------------------------------------------------------------------------------------------------------

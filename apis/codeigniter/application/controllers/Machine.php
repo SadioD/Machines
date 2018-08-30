@@ -5,9 +5,9 @@ class Machine extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        header('Access-Control-Allow-Origin: *');
+        /*header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Headers: X-Requested-Width, Origin, Content-Type, X-Auth-Token');
-        header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+        header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');*/
 
         $this->load->model('machineManager');
     }//--------------------------------------------------------------------------------------------------------------------------------------------
@@ -21,7 +21,8 @@ class Machine extends CI_Controller
     // Permet de supprimer une machine de la liste
     public function deleteMachine($id)
     {
-
+        if($this->machineManager->deleteEntry(['id' => $id]))  {$this->sendResponse('delete', [true]);}
+        else                                                   {$this->sendResponse('delete', [false]);}
     }//--------------------------------------------------------------------------------------------------------------------------------------------
     // Permet d'ajouter une machine à la liste
     public function addNewMachine()
@@ -77,7 +78,7 @@ class Machine extends CI_Controller
         if(   $request == 'machinesList') {
             echo json_encode($response);
         }
-        elseif($request == 'switch' || $request == 'new Machine' || $request == 'update Machine') {
+        else {
             echo json_encode($response[0]);
         }
     }//----------------------------------------------------------------------------------------------------------------------------------------------------------------

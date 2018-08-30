@@ -21,7 +21,7 @@ export class AuthService {
     isAuth() {
         return new Promise((resolve, reject) => {
             if(sessionStorage.getItem('userId')) {
-                this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/user/getUser/' + sessionStorage.getItem('userId')).subscribe(
+                this.httpClient.get('api/user/getUser/' + sessionStorage.getItem('userId')).subscribe(
                     (response: UserManager) => {
                         if(response) {
                             this.user = response;
@@ -45,7 +45,7 @@ export class AuthService {
     // Connecte l'User (grace à sessionStorage.getItem, setItem, removeItem or clear[vide toyt])
     logUserIn(sessionUser: UserManager) {
         return new Promise((resolve, reject) => {
-            this.httpClient.post('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/user/createUser', sessionUser).subscribe(
+            this.httpClient.post('api/user/createUser', sessionUser).subscribe(
                 (response: UserManager) => {
                     this.user = response;
                     sessionStorage.setItem('userId', this.user.id);
@@ -61,7 +61,7 @@ export class AuthService {
     }
     // Déconnecte l'User
     logUserOut() {
-        this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/user/removeUser/' + sessionStorage.getItem('userId')).subscribe(
+        this.httpClient.get('api/user/removeUser/' + sessionStorage.getItem('userId')).subscribe(
             (response: any) => {
                 sessionStorage.removeItem('userId');
                 this.user.status = 'OFF';

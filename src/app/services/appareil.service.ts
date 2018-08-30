@@ -23,7 +23,7 @@ export class AppareilService {
     // Recupère la liste des appareils ----------------------------------------------------------------------------------------------------
     getMachinesList() {
         return new Promise((resolve, reject) => {
-            this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/machine/getMachinesList').subscribe(
+            this.httpClient.get('api/machine/getMachinesList').subscribe(
                 (response: AppareilManager[]) => {
                     this.appareils = response ? response : [];
                     this.emitAppareilsSubject();
@@ -41,7 +41,7 @@ export class AppareilService {
             machine.status = switched;
             this.emitAppareilsSubject();
         }
-        this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/machine/switchALL/' + switched).subscribe(
+        this.httpClient.get('api/machine/switchALL/' + switched).subscribe(
             (response: any) => { },
             (error)    => { console.log(error) }
         );
@@ -52,7 +52,7 @@ export class AppareilService {
         let machineID                = this.appareils[index].id;
 
         this.emitAppareilsSubject();
-        this.httpClient.get('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/machine/switchTHIS/' + machineID+ '/' + switched).subscribe(
+        this.httpClient.get('api/machine/switchTHIS/' + machineID+ '/' + switched).subscribe(
             (response: any) => { },
             (error)    => { console.log(error) }
         );
@@ -78,7 +78,7 @@ export class AppareilService {
     // => On attribue le bon ID à la nouvelle machine + une date de création et on l'ajoute à l'array des machines
     saveThisMachine(machine: NgForm) {
         return new Promise((resolve, reject) => {
-            this.httpClient.post('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/machine/addNewMachine', machine).subscribe(
+            this.httpClient.post('api/machine/addNewMachine', machine).subscribe(
                 (response: AppareilManager) => {
                     if(response) {
                         this.appareils.push(response);
@@ -99,7 +99,7 @@ export class AppareilService {
             const machineIndex = this.appareils.findIndex((s) => {
                 return s.id == machine.id;
             });
-            
+
             // On met à jour la machine + on emet la copie de la liste d'Array
             this.appareils[machineIndex].name    = machine.name;
             this.appareils[machineIndex].content = machine.content;
@@ -107,7 +107,7 @@ export class AppareilService {
             this.emitAppareilsSubject();
 
             // On met à jour la machine dans la BDD
-            this.httpClient.post('http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/machine/updateMachine', machine).subscribe(
+            this.httpClient.post('api/machine/updateMachine', machine).subscribe(
                 (response: any) => {  response ? resolve(true) : resolve(false)  },
                 (error)         => {  reject(error) }
             );
@@ -116,14 +116,24 @@ export class AppareilService {
     // Permet de supprimer une machine -----------------------------------------------------------------------------------------------------------
     // => On attribue le bon ID à la nouvelle machine + une date de création et on l'ajoute à l'array des machines
     deleteThisMachine(machine: AppareilManager) {
-        // On recupère l'index
-        const machineIndex = this.appareils.findIndex((s) => {
-            return s.id === machine.id;
+        return new Promise((resolve, reject) => {
+            // On recupère l'index
+            const machineIndex = this.appareils.findIndex((s) => {
+                return s.id === machine.id;
+            });
+            // On supprime la machine + on emet la copie de la liste d'Array
+            // La methode splice prend l'index à partir duquel la suppression sera faite + le nbre d'éléments à supprimer
+            this.appareils.splice(machineIndex, 1);
+            this.emitAppareilsSubject();
+
+            // Enfin on supprime de la BDD
+            this.httpClient.get('api/machine/deleteMachine/' + machine.id).subscribe(
+                (response: any) => {
+                    response ? resolve(true) : resolve(false);
+                },
+                (error) => { console.log(error) }
+            );
         });
-        // On supprime la machine et on emet la copie de la liste d'Array
-        // La methode splice prend l'index à partir duquel la suppression sera faite + le nbre d'éléments à supprimer
-        this.appareils.splice(machineIndex, 1);
-        this.emitAppareilsSubject();
     }//------------------------------------------------------------------------------------------------------------------------------------
     // EVITE DUPLICATION CODE /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Permet de trouver une machine dans la liste d'Array ------------------------------------------------------------------------------------------------------------------------------------

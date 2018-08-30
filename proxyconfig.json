@@ -1,7 +1,9 @@
 {
-    "/api": {
+    "/api/*": {
         "target": "http://homework:800/Frameworks/Angular/premier-projet/apis/codeigniter/",
         "secure": false,
-        "changeOrigin": true
+        "logLevel": "debug",
+        "changeOrigin": true,
+        "pathRewrite": {"^/api" : ""}
     }
 }
