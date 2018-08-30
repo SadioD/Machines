@@ -26,7 +26,7 @@
                 </div>
                 <div class="row" style = "margin-top: 29%;" *ngIf = "isAuth()">
                     <div class="offset-md-3 col-md-6">
-                        <button type="button" class="btn btn-danger btn-block"  *ngIf = "isAuth()"  (click) = "onlogUserOut()" >Sign Out!</button>
+                        <button type="button" id = "logOut" class="btn btn-danger btn-block"  *ngIf = "isAuth()"  (click) = "onlogUserOut()" >Sign Out!</button>
                     </div>
                 </div>
             </div>

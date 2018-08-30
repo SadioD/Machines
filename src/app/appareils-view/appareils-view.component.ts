@@ -9,6 +9,7 @@ import { AppareilService }              from '../services/appareil.service';
   styleUrls: ['./appareils-view.component.css']
 })
 export class AppareilsViewComponent implements OnInit, OnDestroy {
+    // ATTRIBUTS + CONSTR + ONINIT + ONDESTROY -----------------------------------------------------------------------------------------------------------------
     appareils: AppareilManager[];
     appareilSubscription: Subscription;
 
@@ -16,6 +17,7 @@ export class AppareilsViewComponent implements OnInit, OnDestroy {
 
     // Cette méthode est appelée lors d'initialisation du component
     ngOnInit() {
+        this.loadTitle('The Machines List');
         this.appareilSubscription = this.appareilService.appareilsSubject.subscribe(
             (machines: AppareilManager[]) => {
                 this.appareils = machines;
@@ -30,8 +32,9 @@ export class AppareilsViewComponent implements OnInit, OnDestroy {
     // Cette méthode est appelée lors de la destruction du component
     ngOnDestroy() {
         this.appareilSubscription.unsubscribe();
-    }
-
+    }//-----------------------------------------------------------------------------------------------------------------------------------------
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // METHODS ----------------------------------------------------------------------------------------------------------------------
     // Allume tous les appareils
     onSwitchAllON() {
         this.appareilService.switchAll('ON');
@@ -39,6 +42,12 @@ export class AppareilsViewComponent implements OnInit, OnDestroy {
     // Eteint tous les appareils
     onSwitchAllOFF() {
         this.appareilService.switchAll('OFF');
-    }
+    }//-----------------------------------------------------------------------------------------------------------------------------------------
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // TITLE AND SCRIPTS ----------------------------------------------------------------------------------------------------------------------
+    // Permet de charger le titre de la page
+    public loadTitle(title) {
+        document.getElementsByTagName('title')[0].innerHTML = title;
+    }//-----------------------------------------------------------------------------------------------------------------------------------------
 
 }

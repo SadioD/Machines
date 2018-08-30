@@ -25,8 +25,8 @@ export class SingleAppareilComponent implements OnInit {
                 this.router.navigate(['/machines-list']);
             }
             else {
-                this.loadTitle(this.machine.name);
                 this.machine = appareil;
+                this.loadTitle(this.machine.name);
             }
         });
     }//-----------------------------------------------------------------------------------------------------------------------------------------
