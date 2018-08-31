@@ -34,6 +34,18 @@ export class AppareilService {
                 }
             );
         });
+
+        /*return this.httpClient.get('api/machine/getMachinesList').toPromise().then(
+            (response: AppareilManager[]) => {
+                this.appareils = response ? response : [];
+                this.emitAppareilsSubject();
+                return true;
+            },
+            (error) => {
+                console.log(error);
+            }
+        );*/
+
     }//------------------------------------------------------------------------------------------------------------------------------------------
     // Allume/Eteint tous les appareils -----------------------------------------------------------------------------------------------------------
     switchAll(switched: string) {

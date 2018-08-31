@@ -1,13 +1,13 @@
 <div class="row">
     <div class="col-md-12">
-        <h2>Mes appareils</h2>
+        <h2>The Machines List</h2>
         <app-appareils *ngFor          = "let machine of appareils; let i = index"
                        [appareils]     = "machine"
                        [appareilIndex] = "i">
         </app-appareils>
     </div>
 </div><br/><br/>
-<div class="row">
+<div class="row" style = "margin-bottom: 1%;">
     <div class="offset-sm-2 col-sm-4 text-center">
         <button type="button" class = "btn btn-danger btn-block" (click) = "onSwitchAllOFF()">
             SWITCH ALL OFF
@@ -19,4 +19,3 @@
         </button>
     </div>
 </div>
-<div style = "margin-bottom: 1%;"></div>
